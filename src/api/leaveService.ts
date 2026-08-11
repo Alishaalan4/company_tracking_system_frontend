@@ -10,12 +10,17 @@ export interface LeaveType {
 export interface LeaveRequest {
   id: number;
   user_id: number;
+  /** Present for admins/managers reviewing other people's requests. */
+  user_name?: string;
   leave_type_id: number;
   start_date: string;
   end_date: string;
-  reason: string;
+  /** Inclusive day count, computed server-side. */
+  days: number | null;
+  reason: string | null;
   status: 'pending' | 'approved' | 'rejected';
   leave_type?: LeaveType;
+  created_at?: string;
 }
 
 export const leaveService = {

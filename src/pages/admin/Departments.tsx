@@ -20,6 +20,8 @@ const DepartmentsPage: React.FC = () => {
   const [editing, setEditing] = useState<Department | null>(null);
   const [formData, setFormData] = useState(emptyForm);
   const [formLoading, setFormLoading] = useState(false);
+  // Rendered inside the dialog; the page banner is behind the overlay.
+  const [formError, setFormError] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
 
@@ -45,6 +47,7 @@ const DepartmentsPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     setFormData(emptyForm);
+    setFormError(null);
     setShowModal(true);
   };
 
@@ -57,11 +60,13 @@ const DepartmentsPage: React.FC = () => {
       late_after: d.late_after,
       early_leave_before: d.early_leave_before,
     });
+    setFormError(null);
     setShowModal(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     setFormLoading(true);
     try {
       if (editing) {
@@ -74,7 +79,7 @@ const DepartmentsPage: React.FC = () => {
       setShowModal(false);
       fetchData();
     } catch (err: any) {
-      showMsg('error', err.response?.data?.message || 'Operation failed');
+      setFormError(err.response?.data?.message || 'Operation failed');
     } finally {
       setFormLoading(false);
     }
@@ -170,6 +175,9 @@ const DepartmentsPage: React.FC = () => {
               <button className="icon-btn" onClick={() => setShowModal(false)}><X size={20} /></button>
             </div>
             <form onSubmit={handleSubmit} className="modal-form">
+              {formError && (
+                <div className="status-message error mb-4">{formError}</div>
+              )}
               <div className="input-group">
                 <label>Department Name</label>
                 <input

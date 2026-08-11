@@ -31,6 +31,8 @@ const UsersPage: React.FC = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [formData, setFormData] = useState<UserPayload>(emptyForm);
   const [formLoading, setFormLoading] = useState(false);
+  // Rendered inside the dialog; the page banner is behind the overlay.
+  const [formError, setFormError] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
 
@@ -62,6 +64,7 @@ const UsersPage: React.FC = () => {
   const openCreate = () => {
     setEditingUser(null);
     setFormData(emptyForm);
+    setFormError(null);
     setShowModal(true);
   };
 
@@ -73,11 +76,13 @@ const UsersPage: React.FC = () => {
       role_id: u.role_id,
       department_id: u.department_id,
     });
+    setFormError(null);
     setShowModal(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     setFormLoading(true);
     try {
       if (editingUser) {
@@ -90,7 +95,7 @@ const UsersPage: React.FC = () => {
       setShowModal(false);
       fetchData();
     } catch (err: any) {
-      showMsg('error', err.response?.data?.message || 'Operation failed');
+      setFormError(err.response?.data?.message || 'Operation failed');
     } finally {
       setFormLoading(false);
     }
@@ -283,6 +288,9 @@ const UsersPage: React.FC = () => {
               </button>
             </div>
             <form onSubmit={handleSubmit} className="modal-form">
+              {formError && (
+                <div className="status-message error mb-4">{formError}</div>
+              )}
               <div className="form-row">
                 <div className="input-group">
                   <label>Full Name</label>

@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { leaveService, type LeaveRequest, type LeaveType } from '../api/leaveService';
-import { Calendar, Plus, Clock, CheckCircle2, XCircle, Info, ChevronRight } from 'lucide-react';
-import { format, differenceInDays } from 'date-fns';
+import { Calendar, Plus, Clock, CheckCircle2, XCircle, Info, User as UserIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { useAuth } from '../context/AuthContext';
+import { hasRole } from '../utils/role';
 
 const Leaves: React.FC = () => {
+  const { user } = useAuth();
+  // Admins and managers review other people's requests from this same page.
+  const canReview = hasRole(user, ['admin', 'manager']);
+  const isAdmin = hasRole(user, ['admin']);
+
   const [leaves, setLeaves] = useState<LeaveRequest[]>([]);
+  const [actingOn, setActingOn] = useState<number | null>(null);
   const [types, setTypes] = useState<LeaveType[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,6 +62,25 @@ const Leaves: React.FC = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const pendingCount = leaves.filter((l) => l.status === 'pending').length;
+
+  const decide = async (id: number, status: 'approved' | 'rejected') => {
+    setActingOn(id);
+    setMessage(null);
+    try {
+      await leaveService.updateLeave(id, { status });
+      setMessage({ type: 'success', text: `Request ${status}.` });
+      fetchData();
+    } catch (err: any) {
+      setMessage({
+        type: 'error',
+        text: err.response?.data?.message || 'Could not update the request',
+      });
+    } finally {
+      setActingOn(null);
     }
   };
 
@@ -146,7 +173,10 @@ const Leaves: React.FC = () => {
         <section className="leaves-list-section">
           <div className="glass card list-card">
             <div className="card-header">
-              <h3>My Requests</h3>
+              <h3>{canReview ? 'All Requests' : 'My Requests'}</h3>
+              {canReview && pendingCount > 0 && (
+                <span className="pending-pill">{pendingCount} pending</span>
+              )}
             </div>
             <div className="list-container">
               {leaves.length > 0 ? leaves.map((leave) => (
@@ -162,22 +192,43 @@ const Leaves: React.FC = () => {
                         {leave.status}
                       </span>
                     </div>
+                    {canReview && leave.user_name && (
+                      <p className="leave-requester">
+                        <UserIcon size={13} /> {leave.user_name}
+                      </p>
+                    )}
                     <p className="leave-dates">
                       {format(new Date(leave.start_date), 'MMM d')} - {format(new Date(leave.end_date), 'MMM d, yyyy')}
-                      <span className="duration-tag">
-                        {differenceInDays(new Date(leave.end_date), new Date(leave.start_date)) + 1} days
-                      </span>
+                      <span className="duration-tag">{leave.days ?? '?'} days</span>
                     </p>
-                    <p className="leave-reason">{leave.reason}</p>
-                  </div>
-                  <div className="item-actions">
-                    <ChevronRight size={20} className="text-muted" />
+                    {leave.reason && <p className="leave-reason">{leave.reason}</p>}
+
+                    {/* Only admins may change status: the backend restricts
+                        PUT /leaves/{id} to role:admin. */}
+                    {isAdmin && leave.status === 'pending' && (
+                      <div className="review-actions">
+                        <button
+                          className="btn-approve"
+                          disabled={actingOn === leave.id}
+                          onClick={() => decide(leave.id, 'approved')}
+                        >
+                          <CheckCircle2 size={15} /> Approve
+                        </button>
+                        <button
+                          className="btn-reject"
+                          disabled={actingOn === leave.id}
+                          onClick={() => decide(leave.id, 'rejected')}
+                        >
+                          <XCircle size={15} /> Reject
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )) : (
                 <div className="empty-state">
                   <Info size={40} />
-                  <p>You haven't submitted any leave requests yet.</p>
+                  <p>{canReview ? 'No leave requests yet.' : 'No leave requests submitted yet.'}</p>
                 </div>
               )}
             </div>
@@ -304,6 +355,31 @@ const Leaves: React.FC = () => {
         .duration-tag { margin-left: 0.75rem; padding: 0.1rem 0.4rem; background: var(--border); border-radius: 4px; font-size: 0.75rem; }
 
         .leave-reason { font-size: 0.85rem; color: var(--text-muted); }
+
+        .leave-requester {
+          display: inline-flex; align-items: center; gap: 0.35rem;
+          font-size: 0.83rem; color: var(--text-muted); margin-bottom: 0.2rem;
+        }
+
+        .card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+
+        .pending-pill {
+          background: var(--warning-soft); color: var(--warning);
+          padding: 0.2rem 0.6rem; border-radius: 999px;
+          font-size: 0.75rem; font-weight: 600;
+        }
+
+        .review-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+
+        .btn-approve, .btn-reject {
+          display: inline-flex; align-items: center; gap: 0.35rem;
+          padding: 0.4rem 0.8rem; border-radius: var(--radius-sm);
+          font-size: 0.83rem; font-weight: 600; border: 1px solid transparent;
+        }
+        .btn-approve { background: var(--success-soft); color: var(--success); }
+        .btn-approve:hover:not(:disabled) { background: var(--success); color: #fff; }
+        .btn-reject { background: var(--danger-soft); color: var(--danger); }
+        .btn-reject:hover:not(:disabled) { background: var(--danger); color: #fff; }
 
         .balance-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
         .balance-item { display: flex; flex-direction: column; gap: 0.5rem; }

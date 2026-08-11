@@ -11,6 +11,8 @@ const LeaveTypesPage: React.FC = () => {
   const [editing, setEditing] = useState<LeaveType | null>(null);
   const [formData, setFormData] = useState(emptyForm);
   const [formLoading, setFormLoading] = useState(false);
+  // Rendered inside the dialog; the page banner is behind the overlay.
+  const [formError, setFormError] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
 
@@ -36,17 +38,20 @@ const LeaveTypesPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     setFormData(emptyForm);
+    setFormError(null);
     setShowModal(true);
   };
 
   const openEdit = (t: LeaveType) => {
     setEditing(t);
     setFormData({ name: t.name, annual_limit: t.annual_limit ?? 0 });
+    setFormError(null);
     setShowModal(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     setFormLoading(true);
     try {
       // 0 means uncapped, which the backend stores as null.
@@ -64,7 +69,7 @@ const LeaveTypesPage: React.FC = () => {
       setShowModal(false);
       fetchData();
     } catch (err: any) {
-      showMsg('error', err.response?.data?.message || 'Operation failed');
+      setFormError(err.response?.data?.message || 'Operation failed');
     } finally {
       setFormLoading(false);
     }
@@ -167,6 +172,9 @@ const LeaveTypesPage: React.FC = () => {
               <button className="icon-btn" onClick={() => setShowModal(false)}><X size={20} /></button>
             </div>
             <form onSubmit={handleSubmit} className="modal-form">
+              {formError && (
+                <div className="status-message error mb-4">{formError}</div>
+              )}
               <div className="input-group">
                 <label>Name</label>
                 <input

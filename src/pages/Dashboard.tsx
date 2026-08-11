@@ -24,24 +24,32 @@ const Dashboard: React.FC = () => {
   const [status, setStatus] = useState<any>(null);
   const [leaves, setLeaves] = useState<LeaveRequest[]>([]);
   const [unread, setUnread] = useState(0);
-  const [loading, setLoading] = useState(true);
+
+  // Tracked per card so each one renders the moment its own request lands,
+  // instead of the whole dashboard waiting on the slowest of the three.
+  const [pendingStatus, setPendingStatus] = useState(true);
+  const [pendingLeaves, setPendingLeaves] = useState(true);
+  const [pendingNotifs, setPendingNotifs] = useState(true);
 
   useEffect(() => {
-    // Each card degrades on its own; one failing endpoint must not blank
-    // the whole dashboard.
-    Promise.allSettled([
-      attendanceService.checkStatus(),
-      leaveService.getLeaves(),
-      notificationService.getNotifications(),
-    ])
-      .then(([s, l, n]) => {
-        if (s.status === 'fulfilled') setStatus(s.value);
-        if (l.status === 'fulfilled') setLeaves(unwrap<LeaveRequest>(l.value));
-        if (n.status === 'fulfilled') {
-          setUnread(unwrap<any>(n.value).filter((x) => !x.read_at).length);
-        }
-      })
-      .finally(() => setLoading(false));
+    // Each card also fails on its own; one bad endpoint must not blank the page.
+    attendanceService
+      .checkStatus()
+      .then(setStatus)
+      .catch(() => {})
+      .finally(() => setPendingStatus(false));
+
+    leaveService
+      .getLeaves()
+      .then((res) => setLeaves(unwrap<LeaveRequest>(res)))
+      .catch(() => {})
+      .finally(() => setPendingLeaves(false));
+
+    notificationService
+      .getNotifications()
+      .then((res) => setUnread(unwrap<any>(res).filter((x) => !x.read_at).length))
+      .catch(() => {})
+      .finally(() => setPendingNotifs(false));
   }, []);
 
   const pending = leaves.filter((l) => l.status === 'pending');
@@ -55,7 +63,7 @@ const Dashboard: React.FC = () => {
   const stats = [
     {
       label: 'Today',
-      value: loading ? '—' : checkedIn ? 'Checked in' : 'Not checked in',
+      value: pendingStatus ? '…' : checkedIn ? 'Checked in' : 'Not checked in',
       hint: status?.check_in_time ? format(new Date(status.check_in_time), 'HH:mm') : 'Tap to log your hours',
       icon: checkedIn ? CheckCircle2 : Clock,
       tone: checkedIn ? 'var(--hue-2)' : 'var(--hue-3)',
@@ -63,7 +71,7 @@ const Dashboard: React.FC = () => {
     },
     {
       label: 'Pending leave',
-      value: loading ? '—' : String(pending.length),
+      value: pendingLeaves ? '…' : String(pending.length),
       hint: pending.length === 1 ? 'request awaiting review' : 'requests awaiting review',
       icon: Calendar,
       tone: 'var(--hue-1)',
@@ -71,7 +79,7 @@ const Dashboard: React.FC = () => {
     },
     {
       label: 'Notifications',
-      value: loading ? '—' : String(unread),
+      value: pendingNotifs ? '…' : String(unread),
       hint: unread ? 'unread' : 'all caught up',
       icon: Bell,
       tone: 'var(--hue-5)',
@@ -138,7 +146,7 @@ const Dashboard: React.FC = () => {
               ))}
             </div>
           ) : (
-            <p className="muted-note">{loading ? 'Loading…' : 'No upcoming leave booked.'}</p>
+            <p className="muted-note">{pendingLeaves ? 'Loading…' : 'No upcoming leave booked.'}</p>
           )}
           <button className="btn-text" onClick={() => navigate('/leaves')}>View all leave</button>
         </div>
