@@ -102,13 +102,13 @@ const ReportsPage: React.FC = () => {
           label: 'Present Today',
           value: summary.present_today ?? '—',
           icon: UserCheck,
-          color: 'var(--accent)',
+          color: 'var(--success)',
         },
         {
           label: 'On Leave',
           value: summary.on_leave_today ?? '—',
           icon: Calendar,
-          color: '#f59e0b',
+          color: 'var(--warning)',
         },
         {
           label: 'Absent',
@@ -316,9 +316,9 @@ const ReportsPage: React.FC = () => {
                             <tr key={r.user_id}>
                               <td>{r.user_name}</td>
                               <td>{r.total_days}</td>
-                              <td><span style={{ color: 'var(--accent)' }}>{r.present_days}</span></td>
+                              <td><span style={{ color: 'var(--success)' }}>{r.present_days}</span></td>
                               <td><span style={{ color: 'var(--danger)' }}>{r.absent_days}</span></td>
-                              <td><span style={{ color: '#f59e0b' }}>{r.leave_days}</span></td>
+                              <td><span style={{ color: 'var(--warning)' }}>{r.leave_days}</span></td>
                               <td>
                                 <div className="pct-cell">
                                   <div className="pct-bar">
@@ -326,7 +326,7 @@ const ReportsPage: React.FC = () => {
                                       className="pct-fill"
                                       style={{
                                         width: `${pct}%`,
-                                        background: pct >= 80 ? 'var(--accent)' : pct >= 50 ? '#f59e0b' : 'var(--danger)',
+                                        background: pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--danger)',
                                       }}
                                     />
                                   </div>
@@ -359,17 +359,17 @@ const ReportsPage: React.FC = () => {
         .header-content p { color: var(--text-muted); }
         .export-btns { display: flex; gap: 0.75rem; }
         .btn-export { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; border-radius: 10px; font-weight: 500; font-size: 0.9rem; }
-        .btn-export.pdf { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
-        .btn-export.excel { background: rgba(16,185,129,0.12); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+        .btn-export.pdf { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
+        .btn-export.excel { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
         .btn-export:hover { filter: brightness(1.2); }
         .btn-export:disabled { opacity: 0.6; cursor: not-allowed; }
         .mb-4 { margin-bottom: 1.5rem; }
         .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.75rem; }
-        .tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border-radius: 10px; font-size: 0.9rem; font-weight: 500; background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); color: var(--text-muted); transition: all 0.2s ease; }
-        .tab-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-main); }
-        .tab-btn.active { background: rgba(99,102,241,0.15); border-color: var(--primary); color: var(--primary); }
+        .tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border-radius: 10px; font-size: 0.9rem; font-weight: 500; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted); transition: all 0.2s ease; }
+        .tab-btn:hover { background: var(--surface-2); color: var(--text); }
+        .tab-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
         .report-loading { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 6rem; color: var(--text-muted); }
-        .spinner-sm { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-sm { width: 22px; height: 22px; border: 3px solid var(--primary-ring); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
         .summary-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; }
@@ -378,31 +378,31 @@ const ReportsPage: React.FC = () => {
         .s-label { font-size: 0.85rem; color: var(--text-muted); }
         .s-value { font-size: 1.75rem; font-weight: 700; }
         .report-controls { display: flex; align-items: flex-end; gap: 1rem; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
-        .btn-icon { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
-        .btn-icon:hover { color: var(--text-main); }
+        .btn-icon { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
+        .btn-icon:hover { color: var(--text); }
         .table-card { padding: 0; overflow: hidden; }
         .table-wrapper { overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .data-table thead tr { border-bottom: 1px solid var(--border-color); }
+        .data-table thead tr { border-bottom: 1px solid var(--border); }
         .data-table th { text-align: left; padding: 1rem 1.5rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
-        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
         .data-table tbody tr:last-child td { border-bottom: none; }
-        .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table tbody tr:hover { background: var(--surface-2); }
         .text-muted { color: var(--text-muted); }
         .status-badge { padding: 0.25rem 0.7rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
-        .status-badge.present { background: rgba(16,185,129,0.1); color: #10b981; }
-        .status-badge.absent { background: rgba(239,68,68,0.1); color: #ef4444; }
-        .status-badge.late { background: rgba(245,158,11,0.1); color: #f59e0b; }
-        .status-badge.on-leave { background: rgba(99,102,241,0.1); color: #818cf8; }
+        .status-badge.present { background: var(--success-soft); color: var(--success); }
+        .status-badge.absent { background: var(--danger-soft); color: var(--danger); }
+        .status-badge.late { background: var(--warning-soft); color: var(--warning); }
+        .status-badge.on-leave { background: var(--primary-soft); color: var(--primary); }
         .pct-cell { display: flex; align-items: center; gap: 0.75rem; }
-        .pct-bar { flex: 1; max-width: 100px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+        .pct-bar { flex: 1; max-width: 100px; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
         .pct-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
         .empty-row { text-align: center; padding: 4rem; color: var(--text-muted); }
         .empty-row p { margin-top: 0.75rem; }
         .empty-state { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 6rem; color: var(--text-muted); }
-        select { width: 100%; background: rgba(15,23,42,0.6); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.75rem 1rem; color: white; font-family: inherit; }
+        select { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text); font-family: inherit; }
         .status-message { padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

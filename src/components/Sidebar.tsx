@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getRoleName } from '../utils/role';
+import ThemeToggle from './ThemeToggle';
 
 const Sidebar: React.FC = () => {
   const { user, logout } = useAuth();
@@ -54,16 +55,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="sidebar glass">
       <div className="logo-container">
-        <div className="logo-icon" style={{ 
-          width: '32px', 
-          height: '32px', 
-          background: 'var(--primary)', 
-          borderRadius: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'white'
-        }}>
+        <div className="brand-mark">
           <ShieldCheck size={20} />
         </div>
         <span>TrackIt</span>
@@ -114,6 +106,7 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className="sidebar-footer">
+        <ThemeToggle />
         <button onClick={logout} className="nav-link logout-btn">
           <LogOut size={20} />
           <span>Sign Out</span>
@@ -121,46 +114,38 @@ const Sidebar: React.FC = () => {
       </div>
 
       <style>{`
+        .brand-mark {
+          width: 34px;
+          height: 34px;
+          background: var(--primary);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--on-primary);
+          flex-shrink: 0;
+        }
+
         .nav-menu {
           flex: 1;
           overflow-y: auto;
-          margin: 0 -0.5rem;
-          padding: 0 0.5rem;
-        }
-
-        .nav-section-label {
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          color: var(--text-muted);
-          margin: 1.5rem 1rem 0.75rem;
-          font-weight: 600;
-        }
-
-        .nav-divider {
-          height: 1px;
-          background: var(--border-color);
-          margin: 1.5rem 1rem;
+          margin: 0 -0.25rem;
+          padding: 0 0.25rem;
         }
 
         .sidebar-footer {
           margin-top: auto;
-          padding-top: 1rem;
-          border-top: 1px solid var(--border-color);
+          padding-top: 0.85rem;
+          border-top: 1px solid var(--border);
         }
 
         .logout-btn {
-          width: 100%;
           color: var(--danger) !important;
           margin-bottom: 0;
         }
 
         .logout-btn:hover {
-          background: rgba(239, 68, 68, 0.1) !important;
-        }
-
-        .logo-container {
-          margin-bottom: 2.5rem;
+          background: var(--danger-soft) !important;
         }
       `}</style>
     </aside>

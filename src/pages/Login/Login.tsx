@@ -152,10 +152,10 @@ const Login: React.FC = () => {
           width: 100%;
           height: 100%;
           z-index: -1;
-          background-color: var(--bg-main);
+          background-color: var(--bg);
           background-image: 
-            radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, var(--primary-soft) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, var(--success-soft) 0px, transparent 50%);
         }
 
         .login-card {
@@ -172,13 +172,13 @@ const Login: React.FC = () => {
         .logo-icon {
           width: 64px;
           height: 64px;
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-soft);
           border-radius: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 0 auto 1.5rem;
-          border: 1px solid rgba(99, 102, 241, 0.2);
+          border: 1px solid var(--primary-soft);
         }
 
         .login-header h1 {
@@ -195,11 +195,11 @@ const Login: React.FC = () => {
 
         .mode-tabs {
           display: flex;
-          background: rgba(15, 23, 42, 0.4);
+          background: var(--surface-2);
           padding: 4px;
           border-radius: 12px;
           margin-bottom: 2rem;
-          border: 1px solid var(--border-color);
+          border: 1px solid var(--border);
         }
 
         .mode-tab {
@@ -214,8 +214,8 @@ const Login: React.FC = () => {
 
         .mode-tab.active {
           background: var(--primary);
-          color: white;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+          color: var(--on-primary);
+          box-shadow: var(--shadow-sm);
         }
 
         .input-wrapper {
@@ -235,8 +235,8 @@ const Login: React.FC = () => {
         }
 
         .error-message {
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid rgba(239, 68, 68, 0.2);
+          background: var(--danger-soft);
+          border: 1px solid var(--danger-soft);
           color: var(--danger);
           padding: 0.75rem;
           border-radius: 8px;

@@ -394,15 +394,15 @@ const UsersPage: React.FC = () => {
           justify-content: space-between;
           align-items: center;
           padding: 1.25rem 1.5rem;
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border);
           gap: 1rem;
         }
         .search-box {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          background: rgba(15,23,42,0.5);
-          border: 1px solid var(--border-color);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 10px;
           padding: 0.6rem 1rem;
           flex: 1;
@@ -413,21 +413,21 @@ const UsersPage: React.FC = () => {
           background: transparent;
           border: none;
           outline: none;
-          color: var(--text-main);
+          color: var(--text);
           width: 100%;
           padding: 0;
           box-shadow: none;
         }
         .btn-icon {
-          background: rgba(255,255,255,0.05);
-          border: 1px solid var(--border-color);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 10px;
           padding: 0.6rem;
           color: var(--text-muted);
           display: flex;
           align-items: center;
         }
-        .btn-icon:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
+        .btn-icon:hover { color: var(--text); background: var(--surface-2); }
 
         .table-loading {
           display: flex;
@@ -439,7 +439,7 @@ const UsersPage: React.FC = () => {
         }
         .spinner-sm {
           width: 22px; height: 22px;
-          border: 3px solid rgba(255,255,255,0.1);
+          border: 3px solid var(--primary-ring);
           border-top-color: var(--primary);
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
@@ -453,7 +453,7 @@ const UsersPage: React.FC = () => {
           font-size: 0.9rem;
         }
         .data-table thead tr {
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border);
         }
         .data-table th {
           text-align: left;
@@ -466,17 +466,18 @@ const UsersPage: React.FC = () => {
         }
         .data-table td {
           padding: 1rem 1.5rem;
-          border-bottom: 1px solid rgba(255,255,255,0.04);
+          border-bottom: 1px solid var(--border);
           vertical-align: middle;
         }
-        .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table tbody tr:hover { background: var(--surface-2); }
         .data-table tbody tr:last-child td { border-bottom: none; }
 
         .user-cell { display: flex; align-items: center; gap: 0.75rem; }
         .user-avatar {
           width: 36px; height: 36px;
           border-radius: 10px;
-          background: linear-gradient(135deg, var(--primary), #8b5cf6);
+          background: linear-gradient(135deg, var(--primary), var(--hue-5));
+          color: #fff;
           display: flex; align-items: center; justify-content: center;
           font-weight: 700; font-size: 0.85rem;
           flex-shrink: 0;
@@ -488,32 +489,32 @@ const UsersPage: React.FC = () => {
           padding: 0.25rem 0.7rem; border-radius: 6px;
           font-size: 0.75rem; font-weight: 600; text-transform: capitalize;
         }
-        .badge-admin { background: rgba(239,68,68,0.12); color: #ef4444; }
-        .badge-manager { background: rgba(99,102,241,0.12); color: #818cf8; }
-        .badge-employee { background: rgba(16,185,129,0.12); color: #10b981; }
+        .badge-admin { background: var(--danger-soft); color: var(--danger); }
+        .badge-manager { background: var(--primary-soft); color: var(--primary); }
+        .badge-employee { background: var(--success-soft); color: var(--success); }
 
         .status-pill {
           display: inline-flex; align-items: center; gap: 0.35rem;
           padding: 0.25rem 0.7rem; border-radius: 6px;
           font-size: 0.75rem; font-weight: 600;
         }
-        .status-pill.active { background: rgba(16,185,129,0.1); color: #10b981; }
-        .status-pill.inactive { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .status-pill.active { background: var(--success-soft); color: var(--success); }
+        .status-pill.inactive { background: var(--danger-soft); color: var(--danger); }
 
         .action-btns { display: flex; align-items: center; gap: 0.5rem; }
         .icon-btn {
-          background: rgba(255,255,255,0.06);
-          border: 1px solid var(--border-color);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 8px;
           padding: 0.45rem;
           color: var(--text-muted);
           display: flex; align-items: center;
           transition: all 0.2s ease;
         }
-        .icon-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-main); }
+        .icon-btn:hover { background: var(--surface-3); color: var(--text); }
         .icon-btn.edit:hover { color: var(--primary); border-color: var(--primary); }
         .icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
-        .icon-btn.resend:hover { color: var(--accent); border-color: var(--accent); }
+        .icon-btn.resend:hover { color: var(--success); border-color: var(--success); }
         .delete-confirm { display: flex; align-items: center; gap: 0.4rem; }
 
         .empty-row { text-align: center; padding: 4rem; color: var(--text-muted); }
@@ -549,30 +550,30 @@ const UsersPage: React.FC = () => {
         .modal-form .input-group { margin-bottom: 1.25rem; }
         select {
           width: 100%;
-          background: rgba(15,23,42,0.6);
-          border: 1px solid var(--border-color);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 10px;
           padding: 0.75rem 1rem;
-          color: white;
+          color: var(--text);
           font-family: inherit;
         }
         .modal-footer {
           display: flex; justify-content: flex-end; gap: 1rem;
           margin-top: 1rem; padding-top: 1.5rem;
-          border-top: 1px solid var(--border-color);
+          border-top: 1px solid var(--border);
         }
         .btn-text {
           background: transparent; color: var(--text-muted);
           padding: 0.75rem 1.5rem; border-radius: 10px;
         }
-        .btn-text:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .btn-text:hover { color: var(--text); background: var(--surface-2); }
 
         .status-message {
           padding: 1rem 1.5rem; border-radius: 10px;
           font-size: 0.9rem; margin-bottom: 1.5rem;
         }
-        .status-message.success { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.success { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

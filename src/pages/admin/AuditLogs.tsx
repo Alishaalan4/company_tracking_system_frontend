@@ -31,13 +31,13 @@ const AuditLogsPage: React.FC = () => {
   );
 
   const getActionColor = (action: string) => {
-    if (!action) return '#94a3b8';
+    if (!action) return 'var(--text-muted)';
     const a = action.toLowerCase();
-    if (a.includes('create') || a.includes('store')) return '#10b981';
-    if (a.includes('update') || a.includes('edit')) return '#818cf8';
-    if (a.includes('delete') || a.includes('destroy')) return '#ef4444';
-    if (a.includes('login')) return '#f59e0b';
-    return '#94a3b8';
+    if (a.includes('create') || a.includes('store')) return 'var(--success)';
+    if (a.includes('update') || a.includes('edit')) return 'var(--primary)';
+    if (a.includes('delete') || a.includes('destroy')) return 'var(--danger)';
+    if (a.includes('login')) return 'var(--warning)';
+    return 'var(--text-muted)';
   };
 
   const getActionBg = (action: string) => {
@@ -149,24 +149,24 @@ const AuditLogsPage: React.FC = () => {
         .header-content p { color: var(--text-muted); }
         .mb-4 { margin-bottom: 1.5rem; }
         .table-card { padding: 0; overflow: hidden; }
-        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); gap: 1rem; }
-        .search-box { display: flex; align-items: center; gap: 0.75rem; background: rgba(15,23,42,0.5); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.6rem 1rem; flex: 1; max-width: 420px; color: var(--text-muted); }
-        .search-box input { background: transparent; border: none; outline: none; color: var(--text-main); width: 100%; padding: 0; box-shadow: none; }
-        .btn-icon { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
-        .btn-icon:hover { color: var(--text-main); }
+        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); gap: 1rem; }
+        .search-box { display: flex; align-items: center; gap: 0.75rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 1rem; flex: 1; max-width: 420px; color: var(--text-muted); }
+        .search-box input { background: transparent; border: none; outline: none; color: var(--text); width: 100%; padding: 0; box-shadow: none; }
+        .btn-icon { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
+        .btn-icon:hover { color: var(--text); }
         .table-loading { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 4rem; color: var(--text-muted); }
-        .spinner-sm { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-sm { width: 22px; height: 22px; border: 3px solid var(--primary-ring); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .table-wrapper { overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .data-table thead tr { border-bottom: 1px solid var(--border-color); }
+        .data-table thead tr { border-bottom: 1px solid var(--border); }
         .data-table th { text-align: left; padding: 1rem 1.5rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
-        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
-        .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .data-table tbody tr:hover { background: var(--surface-2); }
         .data-table tbody tr:last-child td { border-bottom: none; }
         .log-time { font-size: 0.85rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
         .user-cell { display: flex; align-items: center; gap: 0.75rem; }
-        .user-avatar-sm { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
+        .user-avatar-sm { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--hue-5)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
         .action-badge { padding: 0.25rem 0.7rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
         .model-tag { font-size: 0.85rem; color: var(--text-muted); }
         .model-id { margin-left: 0.4rem; font-size: 0.75rem; opacity: 0.6; }
@@ -174,7 +174,7 @@ const AuditLogsPage: React.FC = () => {
         .empty-row { text-align: center; padding: 4rem; color: var(--text-muted); }
         .empty-row p { margin-top: 0.75rem; }
         .status-message { padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

@@ -82,11 +82,11 @@ const LeaveTypesPage: React.FC = () => {
   };
 
   const colors = [
-    'rgba(99,102,241,0.12)', 'rgba(16,185,129,0.12)',
-    'rgba(245,158,11,0.12)', 'rgba(239,68,68,0.12)',
+    'var(--primary-soft)', 'var(--success-soft)',
+    'var(--warning-soft)', 'var(--danger-soft)',
     'rgba(139,92,246,0.12)', 'rgba(236,72,153,0.12)',
   ];
-  const textColors = ['#818cf8', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+  const textColors = ['var(--primary)', 'var(--success)', 'var(--warning)', 'var(--danger)', 'var(--primary)', '#ec4899'];
 
   return (
     <div className="leave-types-page animate-fade-in">
@@ -208,11 +208,11 @@ const LeaveTypesPage: React.FC = () => {
         .btn-primary { display: flex; align-items: center; gap: 0.5rem; }
         .mb-4 { margin-bottom: 1.5rem; }
         .table-card { padding: 0; overflow: hidden; }
-        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); }
-        .btn-icon { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
-        .btn-icon:hover { color: var(--text-main); }
+        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); }
+        .btn-icon { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
+        .btn-icon:hover { color: var(--text); }
         .table-loading { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 4rem; color: var(--text-muted); }
-        .spinner-sm { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-sm { width: 22px; height: 22px; border: 3px solid var(--primary-ring); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .lt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; padding: 1.5rem; }
         .lt-card { padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
@@ -220,10 +220,10 @@ const LeaveTypesPage: React.FC = () => {
         .lt-info { flex: 1; min-width: 0; }
         .lt-info h4 { font-size: 1rem; margin-bottom: 0.25rem; }
         .lt-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .lt-days { font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 0.2rem 0.6rem; border-radius: 5px; }
+        .lt-days { font-size: 0.8rem; background: var(--surface-2); padding: 0.2rem 0.6rem; border-radius: 5px; }
         .lt-actions { display: flex; gap: 0.5rem; }
-        .icon-btn { background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; color: var(--text-muted); display: flex; align-items: center; transition: all 0.2s ease; }
-        .icon-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-main); }
+        .icon-btn { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem; color: var(--text-muted); display: flex; align-items: center; transition: all 0.2s ease; }
+        .icon-btn:hover { background: var(--surface-3); color: var(--text); }
         .icon-btn.edit:hover { color: var(--primary); border-color: var(--primary); }
         .icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
         .delete-confirm { display: flex; align-items: center; gap: 0.4rem; }
@@ -234,13 +234,13 @@ const LeaveTypesPage: React.FC = () => {
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; }
         .modal-header h3 { font-size: 1.25rem; }
         .modal-form .input-group { margin-bottom: 1.25rem; }
-        textarea { width: 100%; background: rgba(15,23,42,0.6); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.75rem 1rem; color: white; font-family: inherit; height: 90px; resize: vertical; }
-        .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text); font-family: inherit; height: 90px; resize: vertical; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
         .btn-text { background: transparent; color: var(--text-muted); padding: 0.75rem 1.5rem; border-radius: 10px; }
-        .btn-text:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .btn-text:hover { color: var(--text); background: var(--surface-2); }
         .status-message { padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.success { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.success { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

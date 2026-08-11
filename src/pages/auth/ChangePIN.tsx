@@ -128,20 +128,20 @@ const ChangePIN: React.FC = () => {
         .header-content p { color: var(--text-muted); }
         .form-container { max-width: 480px; }
         .form-card { padding: 2.5rem; }
-        .form-icon { width: 56px; height: 56px; border-radius: 16px; background: rgba(16,185,129,0.12); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+        .form-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--success-soft); color: var(--success); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
         .form-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
         .form-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
         .status-message { padding: 0.9rem 1.25rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.success { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.success { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
         .pin-field { margin-bottom: 1.5rem; }
         .pin-field label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; color: var(--text-muted); }
         .pin-input-wrap { position: relative; }
         .pin-real-input { opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; cursor: text; border: none; background: transparent; }
-        .pin-dots { display: flex; gap: 0.75rem; padding: 1rem; background: rgba(15,23,42,0.6); border: 1px solid var(--border-color); border-radius: 10px; height: 56px; align-items: center; }
-        .pin-dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: all 0.15s ease; }
-        .pin-dot.filled { background: var(--accent); transform: scale(1.15); box-shadow: 0 0 8px rgba(16,185,129,0.4); }
-        .pin-input-wrap:focus-within .pin-dots { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(16,185,129,0.15); }
+        .pin-dots { display: flex; gap: 0.75rem; padding: 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; height: 56px; align-items: center; }
+        .pin-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--surface-3); transition: all 0.15s ease; }
+        .pin-dot.filled { background: var(--success); transform: scale(1.15); box-shadow: 0 0 8px var(--success-soft); }
+        .pin-input-wrap:focus-within .pin-dots { border-color: var(--success); box-shadow: 0 0 0 2px var(--success-soft); }
         .full-btn { width: 100%; justify-content: center; }
         .btn-primary { display: flex; align-items: center; gap: 0.5rem; }
       `}</style>

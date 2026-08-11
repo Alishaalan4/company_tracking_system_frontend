@@ -200,13 +200,13 @@ const Attendance: React.FC = () => {
         }
 
         .status-badge.active {
-          background: rgba(16, 185, 129, 0.1);
-          color: #10b981;
+          background: var(--success-soft);
+          color: var(--success);
         }
 
         .status-badge.inactive {
-          background: rgba(245, 158, 11, 0.1);
-          color: #f59e0b;
+          background: var(--warning-soft);
+          color: var(--warning);
         }
 
         .clock-display {
@@ -243,7 +243,7 @@ const Attendance: React.FC = () => {
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          border: 2px solid var(--border-color);
+          border: 2px solid var(--border);
           transition: all 0.2s ease;
         }
 
@@ -262,9 +262,9 @@ const Attendance: React.FC = () => {
         .pin-btn {
           height: 60px;
           border-radius: 12px;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid var(--border-color);
-          color: white;
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          color: var(--text);
           font-size: 1.25rem;
           font-weight: 600;
           display: flex;
@@ -273,15 +273,17 @@ const Attendance: React.FC = () => {
         }
 
         .pin-btn:hover:not(:disabled) {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.2);
+          background: var(--surface-2);
+          border-color: var(--border-strong);
         }
 
         .pin-btn.action {
           border: none;
+          /* Sits on a solid success/danger fill in both themes. */
+          color: #fff;
         }
 
-        .pin-btn.action.in { background: var(--accent); }
+        .pin-btn.action.in { background: var(--success); }
         .pin-btn.action.out { background: var(--danger); }
         .pin-btn.action:disabled { opacity: 0.5; cursor: not-allowed; }
 
@@ -297,8 +299,8 @@ const Attendance: React.FC = () => {
           font-size: 0.9rem;
         }
 
-        .status-message.success { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .status-message.error { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .status-message.success { background: var(--success-soft); color: var(--success); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); }
 
         .history-card {
           height: 100%;
@@ -326,9 +328,9 @@ const Attendance: React.FC = () => {
           display: flex;
           align-items: center;
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.02);
+          background: var(--surface-2);
           border-radius: 12px;
-          border: 1px solid var(--border-color);
+          border: 1px solid var(--border);
         }
 
         .record-date {
@@ -336,7 +338,7 @@ const Attendance: React.FC = () => {
           flex-direction: column;
           align-items: center;
           padding-right: 1rem;
-          border-right: 1px solid var(--border-color);
+          border-right: 1px solid var(--border);
           min-width: 50px;
         }
 
@@ -355,7 +357,7 @@ const Attendance: React.FC = () => {
           font-weight: 500;
         }
 
-        .check-in { color: #10b981; }
+        .check-in { color: var(--success); }
         .check-out { color: var(--text-muted); }
 
         .badge {
@@ -366,11 +368,11 @@ const Attendance: React.FC = () => {
           text-transform: uppercase;
         }
 
-        .badge.ontime { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .badge.late { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-        .badge.early { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-        .badge.absent { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .badge.pending { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
+        .badge.ontime { background: var(--success-soft); color: var(--success); }
+        .badge.late { background: var(--danger-soft); color: var(--danger); }
+        .badge.early { background: var(--warning-soft); color: var(--warning); }
+        .badge.absent { background: var(--danger-soft); color: var(--danger); }
+        .badge.pending { background: rgba(148, 163, 184, 0.12); color: var(--text-muted); }
 
         .empty-state {
           display: flex;

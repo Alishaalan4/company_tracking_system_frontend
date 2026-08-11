@@ -227,11 +227,11 @@ const Leaves: React.FC = () => {
 
         select, textarea {
           width: 100%;
-          background: rgba(15, 23, 42, 0.6);
-          border: 1px solid var(--border-color);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
           border-radius: 10px;
           padding: 0.75rem 1rem;
-          color: white;
+          color: var(--text);
           font-family: inherit;
         }
 
@@ -257,23 +257,23 @@ const Leaves: React.FC = () => {
         }
 
         .list-card { padding: 0; overflow: hidden; }
-        .list-card .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .list-card .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); }
         
         .leave-list-item {
           display: flex;
           align-items: center;
           padding: 1.5rem;
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border);
           transition: background 0.2s ease;
         }
 
-        .leave-list-item:hover { background: rgba(255, 255, 255, 0.02); }
+        .leave-list-item:hover { background: var(--surface-2); }
 
         .leave-type-icon {
           width: 48px;
           height: 48px;
           border-radius: 12px;
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-soft);
           color: var(--primary);
           display: flex;
           align-items: center;
@@ -296,12 +296,12 @@ const Leaves: React.FC = () => {
           text-transform: capitalize;
         }
 
-        .status-tag.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-        .status-tag.approved { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .status-tag.rejected { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .status-tag.pending { background: var(--warning-soft); color: var(--warning); }
+        .status-tag.approved { background: var(--success-soft); color: var(--success); }
+        .status-tag.rejected { background: var(--danger-soft); color: var(--danger); }
 
         .leave-dates { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .duration-tag { margin-left: 0.75rem; padding: 0.1rem 0.4rem; background: var(--border-color); border-radius: 4px; font-size: 0.75rem; }
+        .duration-tag { margin-left: 0.75rem; padding: 0.1rem 0.4rem; background: var(--border); border-radius: 4px; font-size: 0.75rem; }
 
         .leave-reason { font-size: 0.85rem; color: var(--text-muted); }
 
@@ -310,7 +310,7 @@ const Leaves: React.FC = () => {
         .balance-item .label { font-size: 0.85rem; color: var(--text-muted); }
         .balance-item .value { font-weight: 600; }
 
-        .progress-bar { height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; }
+        .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
         .progress { height: 100%; background: var(--primary); }
 
         .mb-4 { margin-bottom: 1.5rem; }

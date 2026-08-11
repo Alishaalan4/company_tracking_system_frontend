@@ -178,14 +178,14 @@ const SettingsPage: React.FC = () => {
         .header-content p { color: var(--text-muted); }
         .mb-4 { margin-bottom: 1.5rem; }
         .settings-loading { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 6rem; color: var(--text-muted); }
-        .spinner-sm { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-sm { width: 22px; height: 22px; border: 3px solid var(--primary-ring); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .settings-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
         .settings-card { padding: 0; overflow: hidden; }
-        .settings-card-header { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; border-bottom: 1px solid var(--border-color); }
-        .settings-icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(99,102,241,0.12); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .settings-icon.accent { background: rgba(16,185,129,0.12); color: var(--accent); }
-        .settings-icon.warning { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .settings-card-header { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; border-bottom: 1px solid var(--border); }
+        .settings-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .settings-icon.accent { background: var(--success-soft); color: var(--success); }
+        .settings-icon.warning { background: var(--warning-soft); color: var(--warning); }
         .settings-card-header h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
         .settings-card-header p { font-size: 0.85rem; color: var(--text-muted); }
         .settings-body { padding: 1.5rem; }
@@ -194,8 +194,8 @@ const SettingsPage: React.FC = () => {
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
         .toggle-label { display: flex; align-items: flex-start; gap: 1rem; cursor: pointer; }
         .toggle-label input[type="checkbox"] { display: none; }
-        .toggle-switch { position: relative; width: 44px; height: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; flex-shrink: 0; margin-top: 2px; transition: background 0.2s; }
-        .toggle-switch::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: transform 0.2s; }
+        .toggle-switch { position: relative; width: 44px; height: 24px; background: var(--surface-3); border-radius: 12px; flex-shrink: 0; margin-top: 2px; transition: background 0.2s; }
+        .toggle-switch::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); top: 3px; left: 3px; transition: transform 0.2s; }
         .toggle-label input:checked + .toggle-switch { background: var(--primary); }
         .toggle-label input:checked + .toggle-switch::after { transform: translateX(20px); }
         .toggle-text { font-weight: 500; display: block; margin-bottom: 0.2rem; }
@@ -204,8 +204,8 @@ const SettingsPage: React.FC = () => {
         .save-bar p { font-size: 0.9rem; color: var(--text-muted); }
         .btn-primary { display: flex; align-items: center; gap: 0.5rem; }
         .status-message { padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.success { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.success { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

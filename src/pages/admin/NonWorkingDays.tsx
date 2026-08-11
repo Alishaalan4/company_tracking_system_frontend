@@ -234,26 +234,26 @@ const NonWorkingDaysPage: React.FC = () => {
         .btn-primary { display: flex; align-items: center; gap: 0.5rem; }
         .mb-4 { margin-bottom: 1.5rem; }
         .table-card { padding: 0; overflow: hidden; }
-        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); }
-        .btn-icon { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
+        .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); }
+        .btn-icon { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem; color: var(--text-muted); display: flex; align-items: center; }
         .table-loading { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 4rem; color: var(--text-muted); }
-        .spinner-sm { width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-sm { width: 22px; height: 22px; border: 3px solid var(--primary-ring); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .table-wrapper { overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .data-table thead tr { border-bottom: 1px solid var(--border-color); }
+        .data-table thead tr { border-bottom: 1px solid var(--border); }
         .data-table th { text-align: left; padding: 1rem 1.5rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
-        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
-        .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .data-table tbody tr:hover { background: var(--surface-2); }
         .data-table tbody tr:last-child td { border-bottom: none; }
         .date-cell { display: flex; align-items: center; gap: 0.75rem; }
-        .cal-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(245,158,11,0.1); color: #f59e0b; display: flex; align-items: center; justify-content: center; }
+        .cal-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--warning-soft); color: var(--warning); display: flex; align-items: center; justify-content: center; }
         .date-text { font-weight: 500; }
-        .badge-recurring { background: rgba(99,102,241,0.12); color: #818cf8; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
-        .badge-once { background: rgba(255,255,255,0.06); color: var(--text-muted); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .badge-recurring { background: var(--primary-soft); color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .badge-once { background: var(--surface-2); color: var(--text-muted); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
         .action-btns { display: flex; align-items: center; gap: 0.5rem; }
-        .icon-btn { background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.45rem; color: var(--text-muted); display: flex; align-items: center; transition: all 0.2s ease; }
-        .icon-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-main); }
+        .icon-btn { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem; color: var(--text-muted); display: flex; align-items: center; transition: all 0.2s ease; }
+        .icon-btn:hover { background: var(--surface-3); color: var(--text); }
         .icon-btn.edit:hover { color: var(--primary); border-color: var(--primary); }
         .icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
         .delete-confirm { display: flex; align-items: center; gap: 0.4rem; }
@@ -267,15 +267,15 @@ const NonWorkingDaysPage: React.FC = () => {
         .toggle-group { margin-bottom: 1.5rem; }
         .toggle-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
         .toggle-label input[type="checkbox"] { display: none; }
-        .toggle-switch { position: relative; width: 44px; height: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; flex-shrink: 0; transition: background 0.2s; }
-        .toggle-switch::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: transform 0.2s; }
+        .toggle-switch { position: relative; width: 44px; height: 24px; background: var(--surface-3); border-radius: 12px; flex-shrink: 0; transition: background 0.2s; }
+        .toggle-switch::after { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); top: 3px; left: 3px; transition: transform 0.2s; }
         .toggle-label input:checked + .toggle-switch { background: var(--primary); }
         .toggle-label input:checked + .toggle-switch::after { transform: translateX(20px); }
-        .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
         .btn-text { background: transparent; color: var(--text-muted); padding: 0.75rem 1.5rem; border-radius: 10px; }
         .status-message { padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .status-message.success { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-        .status-message.error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .status-message.success { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-soft); }
+        .status-message.error { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-soft); }
       `}</style>
     </div>
   );

@@ -105,14 +105,14 @@ const Notifications: React.FC = () => {
         .notification-item {
           display: flex;
           padding: 1.5rem;
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border);
           gap: 1.5rem;
           transition: background 0.2s ease;
           position: relative;
         }
 
         .notification-item:hover {
-          background: rgba(255, 255, 255, 0.02);
+          background: var(--surface-2);
         }
 
         .notification-item.unread::before {
@@ -129,7 +129,7 @@ const Notifications: React.FC = () => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: rgba(99, 102, 241, 0.1);
+          background: var(--primary-soft);
           color: var(--primary);
           display: flex;
           align-items: center;
@@ -168,9 +168,9 @@ const Notifications: React.FC = () => {
         }
 
         .btn-mark-read {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid var(--border-color);
-          color: var(--text-main);
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          color: var(--text);
           padding: 0.4rem 0.8rem;
           border-radius: 6px;
           font-size: 0.8rem;
@@ -181,14 +181,14 @@ const Notifications: React.FC = () => {
         }
 
         .btn-mark-read:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.2);
+          background: var(--surface-3);
+          border-color: var(--border-strong);
         }
 
         .spinner {
           width: 30px;
           height: 30px;
-          border: 3px solid rgba(255, 255, 255, 0.1);
+          border: 3px solid var(--primary-ring);
           border-top-color: var(--primary);
           border-radius: 50%;
           animation: spin 1s linear infinite;
