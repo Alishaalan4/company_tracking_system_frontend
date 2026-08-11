@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api/axios';
 import { LogIn, Key, Mail, ShieldCheck } from 'lucide-react';
@@ -130,7 +130,7 @@ const Login: React.FC = () => {
         </form>
 
         <div className="login-footer">
-          <a href="#">Forgot your {isPinMode ? 'PIN' : 'password'}?</a>
+          <Link to="/forgot-password">Forgot your {isPinMode ? 'PIN' : 'password'}?</Link>
         </div>
       </motion.div>
 

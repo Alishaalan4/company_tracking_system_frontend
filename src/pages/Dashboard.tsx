@@ -1,9 +1,16 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, LogOut, Clock, Calendar, Bell, ChevronRight } from 'lucide-react';
+import { getRoleName } from '../utils/role';
+import { useNavigate } from 'react-router-dom';
+import { LogOut, Clock, Calendar, Bell, ChevronRight, Users, FileText } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const roleName = getRoleName(user) ?? 'employee';
+  const isAdmin = roleName === 'admin';
+  const isManager = roleName === 'manager';
 
   const stats = [
     { label: 'Today Status', value: 'Not Checked-In', icon: Clock, color: 'var(--primary)' },
@@ -42,7 +49,7 @@ const Dashboard: React.FC = () => {
         <div className="glass-card action-card">
           <h3>Quick Check-In</h3>
           <p>Ready to start your work day? Submit your status now.</p>
-          <button className="btn-primary">Check-In Now</button>
+          <button className="btn-primary" onClick={() => navigate('/attendance')}>Check-In Now</button>
         </div>
         
         <div className="glass-card action-card">
@@ -52,8 +59,28 @@ const Dashboard: React.FC = () => {
             <span className="leave-status">Pending</span>
             <ChevronRight size={16} />
           </div>
-          <button className="text-btn">View All Leaves</button>
+          <button className="text-btn" onClick={() => navigate('/leaves')}>View All Leaves</button>
         </div>
+
+        {isAdmin && (
+          <div className="glass-card action-card">
+            <h3>Admin Controls</h3>
+            <p>Manage users, departments, and system settings across the organization.</p>
+            <button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => navigate('/admin/users')}>
+              <Users size={18} /> Manage Users
+            </button>
+          </div>
+        )}
+
+        {isManager && (
+          <div className="glass-card action-card">
+            <h3>Team Overview</h3>
+            <p>Review team attendance and approve leave requests.</p>
+            <button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => navigate('/admin/reports')}>
+              <FileText size={18} /> View Reports
+            </button>
+          </div>
+        )}
       </section>
 
       <style>{`
