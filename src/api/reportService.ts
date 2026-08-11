@@ -5,6 +5,10 @@ export interface ReportSummary {
   present_today: number;
   on_leave_today: number;
   absent_today: number;
+  /** Running totals across all records, also used by the PDF export. */
+  total_late: number;
+  total_absent: number;
+  total_early: number;
 }
 
 export interface DailyReport {
@@ -21,7 +25,7 @@ export interface DailyReport {
 }
 
 export interface MonthlyReport {
-  month: string;
+  month: number;
   year: number;
   records: {
     user_id: number;
@@ -30,6 +34,7 @@ export interface MonthlyReport {
     present_days: number;
     absent_days: number;
     leave_days: number;
+    late_days: number;
   }[];
 }
 

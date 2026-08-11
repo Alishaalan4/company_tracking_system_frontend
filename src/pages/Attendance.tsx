@@ -3,6 +3,15 @@ import { attendanceService, type AttendanceRecord } from '../api/attendanceServi
 import { Clock, CheckCircle2, AlertCircle, History } from 'lucide-react';
 import { format } from 'date-fns';
 
+// The backend accepts a 4-6 digit PIN (and ChangePIN lets users set up to 6),
+// so the keypad must not hard-code 4 or longer PINs can never be entered.
+const PIN_MIN_LENGTH = 4;
+const PIN_MAX_LENGTH = 6;
+
+/** Timestamps arrive as ISO 8601; render just the clock time. */
+const formatTime = (iso: string | null) =>
+  iso ? format(new Date(iso), 'HH:mm') : '--:--';
+
 const Attendance: React.FC = () => {
   const [pin, setPin] = useState('');
   const [status, setStatus] = useState<any>(null);
@@ -34,8 +43,8 @@ const Attendance: React.FC = () => {
   };
 
   const handleAction = async (action: 'in' | 'out') => {
-    if (pin.length !== 4) {
-      setMessage({ type: 'error', text: 'Please enter a 4-digit PIN' });
+    if (pin.length < PIN_MIN_LENGTH) {
+      setMessage({ type: 'error', text: `Please enter your ${PIN_MIN_LENGTH}-${PIN_MAX_LENGTH} digit PIN` });
       return;
     }
 
@@ -64,7 +73,7 @@ const Attendance: React.FC = () => {
   };
 
   const handlePinInput = (num: string) => {
-    if (pin.length < 4) setPin(prev => prev + num);
+    if (pin.length < PIN_MAX_LENGTH) setPin(prev => prev + num);
   };
 
   const clearPin = () => setPin('');
@@ -93,7 +102,7 @@ const Attendance: React.FC = () => {
 
             <div className="pin-pad-container">
               <div className="pin-display">
-                {[...Array(4)].map((_, i) => (
+                {[...Array(PIN_MAX_LENGTH)].map((_, i) => (
                   <div key={i} className={`pin-dot ${pin.length > i ? 'filled' : ''}`} />
                 ))}
               </div>
@@ -109,7 +118,7 @@ const Attendance: React.FC = () => {
                 <button 
                   onClick={() => status?.is_checked_in ? handleAction('out') : handleAction('in')} 
                   className={`pin-btn action ${status?.is_checked_in ? 'out' : 'in'}`}
-                  disabled={loading || pin.length !== 4}
+                  disabled={loading || pin.length < PIN_MIN_LENGTH}
                 >
                   GO
                 </button>
@@ -140,10 +149,10 @@ const Attendance: React.FC = () => {
                   </div>
                   <div className="record-details">
                     <div className="times">
-                      <span className="check-in">IN: {record.check_in.split(' ')[1]}</span>
-                      <span className="check-out">OUT: {record.check_out ? record.check_out.split(' ')[1] : '--:--'}</span>
+                      <span className="check-in">IN: {formatTime(record.check_in)}</span>
+                      <span className="check-out">OUT: {formatTime(record.check_out)}</span>
                     </div>
-                    {record.duration && (
+                    {record.duration != null && (
                       <span className="duration">{Math.floor(record.duration / 60)}h {record.duration % 60}m</span>
                     )}
                   </div>
@@ -226,7 +235,7 @@ const Attendance: React.FC = () => {
         .pin-display {
           display: flex;
           justify-content: center;
-          gap: 1.5rem;
+          gap: 1rem;
           margin-bottom: 2rem;
         }
 
@@ -359,6 +368,9 @@ const Attendance: React.FC = () => {
 
         .badge.ontime { background: rgba(16, 185, 129, 0.1); color: #10b981; }
         .badge.late { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .badge.early { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .badge.absent { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .badge.pending { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
 
         .empty-state {
           display: flex;

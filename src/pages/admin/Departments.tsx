@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { departmentService, type Department } from '../../api/departmentService';
+import { departmentService, type Department, type DepartmentPayload } from '../../api/departmentService';
 import { Building2, Plus, Pencil, Trash2, RefreshCw, X, CheckCircle2 } from 'lucide-react';
 
-const emptyForm = { name: '', description: '' };
+const emptyForm: DepartmentPayload = {
+  name: '',
+  work_start: '09:00',
+  work_end: '17:00',
+  late_after: 15,
+  early_leave_before: 15,
+};
+
+/** The API returns "HH:MM:SS"; <input type="time"> wants "HH:MM". */
+const toTimeInput = (value: string) => (value ? value.slice(0, 5) : '');
 
 const DepartmentsPage: React.FC = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -41,7 +50,13 @@ const DepartmentsPage: React.FC = () => {
 
   const openEdit = (d: Department) => {
     setEditing(d);
-    setFormData({ name: d.name, description: d.description || '' });
+    setFormData({
+      name: d.name,
+      work_start: toTimeInput(d.work_start),
+      work_end: toTimeInput(d.work_end),
+      late_after: d.late_after,
+      early_leave_before: d.early_leave_before,
+    });
     setShowModal(true);
   };
 
@@ -114,7 +129,7 @@ const DepartmentsPage: React.FC = () => {
                   </div>
                   <div className="dept-info">
                     <h4>{d.name}</h4>
-                    {d.description && <p>{d.description}</p>}
+                    <p>{toTimeInput(d.work_start)} - {toTimeInput(d.work_end)}</p>
                   </div>
                   <div className="dept-actions">
                     <button className="icon-btn edit" onClick={() => openEdit(d)} title="Edit">
@@ -165,13 +180,47 @@ const DepartmentsPage: React.FC = () => {
                   required
                 />
               </div>
-              <div className="input-group">
-                <label>Description <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span></label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Brief description..."
-                />
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Work Start</label>
+                  <input
+                    type="time"
+                    value={formData.work_start}
+                    onChange={(e) => setFormData({ ...formData, work_start: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Work End</label>
+                  <input
+                    type="time"
+                    value={formData.work_end}
+                    onChange={(e) => setFormData({ ...formData, work_end: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Late After (minutes)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={formData.late_after}
+                    onChange={(e) => setFormData({ ...formData, late_after: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Early Leave Before (minutes)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={formData.early_leave_before}
+                    onChange={(e) => setFormData({ ...formData, early_leave_before: Number(e.target.value) })}
+                    required
+                  />
+                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn-text" onClick={() => setShowModal(false)}>Cancel</button>
@@ -185,6 +234,7 @@ const DepartmentsPage: React.FC = () => {
       )}
 
       <style>{`
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
         .header-content h1 { font-size: 2rem; margin-bottom: 0.25rem; }
         .header-content p { color: var(--text-muted); }

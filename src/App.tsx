@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import type { RoleName } from './types';
 import { hasRole } from './utils/role';
@@ -46,6 +46,25 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+// Users created by an admin get a temporary password/PIN by email and are
+// flagged until they replace them. The backend enforces this too
+// (credentials.current middleware); this just avoids rendering pages that
+// would only 403.
+const RequireCurrentCredentials = ({ children }: { children: React.ReactNode }) => {
+  const { user } = useAuth();
+  const { pathname } = useLocation();
+
+  if (user?.must_change_password && pathname !== '/change-password') {
+    return <Navigate to="/change-password" replace />;
+  }
+
+  if (user?.must_change_pin && pathname !== '/change-pin') {
+    return <Navigate to="/change-pin" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 // Restricts a route to the given roles. Mirrors the backend `role:` middleware —
 // the server still enforces this, the guard just avoids rendering a page that
 // would only 403.
@@ -71,6 +90,7 @@ function App() {
           path="/*"
           element={
             <ProtectedRoute>
+              <RequireCurrentCredentials>
               <div className="app-container">
                 <Sidebar />
                 <main className="main-content">
@@ -96,6 +116,7 @@ function App() {
                   </Routes>
                 </main>
               </div>
+              </RequireCurrentCredentials>
             </ProtectedRoute>
           }
         />

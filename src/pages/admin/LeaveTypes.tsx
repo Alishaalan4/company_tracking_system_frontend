@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { leaveService, type LeaveType } from '../../api/leaveService';
 import { ClipboardList, Plus, Pencil, Trash2, RefreshCw, X, CheckCircle2 } from 'lucide-react';
 
-const emptyForm = { name: '', description: '', days_allowed: 0 };
+const emptyForm = { name: '', annual_limit: 0 };
 
 const LeaveTypesPage: React.FC = () => {
   const [types, setTypes] = useState<LeaveType[]>([]);
@@ -41,7 +41,7 @@ const LeaveTypesPage: React.FC = () => {
 
   const openEdit = (t: LeaveType) => {
     setEditing(t);
-    setFormData({ name: t.name, description: t.description || '', days_allowed: t.days_allowed });
+    setFormData({ name: t.name, annual_limit: t.annual_limit ?? 0 });
     setShowModal(true);
   };
 
@@ -49,7 +49,11 @@ const LeaveTypesPage: React.FC = () => {
     e.preventDefault();
     setFormLoading(true);
     try {
-      const payload = { ...formData, days_allowed: Number(formData.days_allowed) };
+      // 0 means uncapped, which the backend stores as null.
+      const payload = {
+        name: formData.name,
+        annual_limit: Number(formData.annual_limit) || null,
+      };
       if (editing) {
         await leaveService.updateLeaveType(editing.id, payload);
         showMsg('success', 'Leave type updated');
@@ -122,8 +126,7 @@ const LeaveTypesPage: React.FC = () => {
                   </div>
                   <div className="lt-info">
                     <h4>{t.name}</h4>
-                    {t.description && <p className="lt-desc">{t.description}</p>}
-                    <span className="lt-days">{t.days_allowed} days/year</span>
+                    <span className="lt-days">{t.annual_limit ?? 'Unlimited'} days/year</span>
                   </div>
                   <div className="lt-actions">
                     <button className="icon-btn edit" onClick={() => openEdit(t)} title="Edit">
@@ -175,21 +178,16 @@ const LeaveTypesPage: React.FC = () => {
                 />
               </div>
               <div className="input-group">
-                <label>Days Allowed Per Year</label>
+                <label>
+                  Days Allowed Per Year{' '}
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(0 = unlimited)</span>
+                </label>
                 <input
                   type="number"
                   min={0}
-                  value={formData.days_allowed}
-                  onChange={(e) => setFormData({ ...formData, days_allowed: Number(e.target.value) })}
+                  value={formData.annual_limit}
+                  onChange={(e) => setFormData({ ...formData, annual_limit: Number(e.target.value) })}
                   required
-                />
-              </div>
-              <div className="input-group">
-                <label>Description <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span></label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Brief description..."
                 />
               </div>
               <div className="modal-footer">

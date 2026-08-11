@@ -1,15 +1,21 @@
 import api from './axios';
 
+/** Shape emitted by the backend AttendanceResource. */
 export interface AttendanceRecord {
   id: number;
   user_id: number;
-  check_in: string;
-  check_out: string | null;
+  user_name?: string;
+  department?: string | null;
   date: string;
-  status: string;
+  /** ISO 8601, or null while the day has not been opened/closed. */
+  check_in: string | null;
+  check_out: string | null;
+  /** Worked minutes, null until checked out. */
   duration: number | null;
-  location_in: string | null;
-  location_out: string | null;
+  status: 'ontime' | 'late' | 'early' | 'absent' | 'pending';
+  is_late: boolean;
+  left_early: boolean;
+  is_absent: boolean;
 }
 
 export const attendanceService = {

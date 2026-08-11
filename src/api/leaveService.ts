@@ -3,8 +3,8 @@ import api from './axios';
 export interface LeaveType {
   id: number;
   name: string;
-  description: string | null;
-  days_allowed: number;
+  /** Days permitted per year; null means uncapped. Column is `annual_limit`. */
+  annual_limit: number | null;
 }
 
 export interface LeaveRequest {
@@ -53,13 +53,13 @@ export const leaveService = {
   },
 
   // Admin: create leave type
-  createLeaveType: async (data: { name: string; description?: string; days_allowed: number }) => {
+  createLeaveType: async (data: { name: string; annual_limit: number | null }) => {
     const response = await api.post('/leave-types', data);
     return response.data;
   },
 
   // Admin: update leave type
-  updateLeaveType: async (id: number, data: { name: string; description?: string; days_allowed: number }) => {
+  updateLeaveType: async (id: number, data: { name: string; annual_limit: number | null }) => {
     const response = await api.put(`/leave-types/${id}`, data);
     return response.data;
   },

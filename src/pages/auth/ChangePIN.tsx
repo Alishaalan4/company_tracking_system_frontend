@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { authService } from '../../api/authService';
+import { useAuth } from '../../context/AuthContext';
 import { Hash } from 'lucide-react';
 
 const ChangePIN: React.FC = () => {
+  const { setUser } = useAuth();
   const [form, setForm] = useState({ current_pin: '', pin: '', pin_confirmation: '' });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (form.pin.length < 4 || form.pin.length > 6) {
+      setMessage({ type: 'error', text: 'PIN must be 4 to 6 digits' });
+      return;
+    }
     if (form.pin !== form.pin_confirmation) {
       setMessage({ type: 'error', text: 'PINs do not match' });
       return;
@@ -16,7 +22,9 @@ const ChangePIN: React.FC = () => {
     setLoading(true);
     setMessage(null);
     try {
-      await authService.changePin(form);
+      const { user } = await authService.changePin(form);
+      // Clears must_change_pin so the gate stops redirecting here.
+      if (user) setUser(user);
       setMessage({ type: 'success', text: 'Attendance PIN updated successfully!' });
       setForm({ current_pin: '', pin: '', pin_confirmation: '' });
     } catch (err: any) {

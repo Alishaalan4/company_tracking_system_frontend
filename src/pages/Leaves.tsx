@@ -191,7 +191,7 @@ const Leaves: React.FC = () => {
               {types.map(t => (
                 <div key={t.id} className="balance-item">
                   <span className="label">{t.name}</span>
-                  <span className="value">{t.days_allowed} Days</span>
+                  <span className="value">{t.annual_limit ?? 'Unlimited'} Days</span>
                   <div className="progress-bar">
                     <div className="progress" style={{ width: '0%' }}></div>
                   </div>

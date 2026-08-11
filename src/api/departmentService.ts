@@ -3,9 +3,16 @@ import api from './axios';
 export interface Department {
   id: number;
   name: string;
-  description?: string | null;
-  manager_id?: number | null;
+  /** "HH:MM:SS" working window used to derive late / early-leave flags. */
+  work_start: string;
+  work_end: string;
+  /** Grace period in minutes before a check-in counts as late. */
+  late_after: number;
+  /** Minutes before work_end that a check-out counts as leaving early. */
+  early_leave_before: number;
 }
+
+export type DepartmentPayload = Omit<Department, 'id'>;
 
 export const departmentService = {
   getDepartments: async () => {
@@ -18,12 +25,12 @@ export const departmentService = {
     return response.data;
   },
 
-  createDepartment: async (data: { name: string; description?: string; manager_id?: number | null }) => {
+  createDepartment: async (data: DepartmentPayload) => {
     const response = await api.post('/departments', data);
     return response.data;
   },
 
-  updateDepartment: async (id: number, data: { name: string; description?: string; manager_id?: number | null }) => {
+  updateDepartment: async (id: number, data: DepartmentPayload) => {
     const response = await api.put(`/departments/${id}`, data);
     return response.data;
   },

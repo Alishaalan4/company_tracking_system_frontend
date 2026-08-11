@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { authService } from '../../api/authService';
+import { useAuth } from '../../context/AuthContext';
 import { Lock, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 
 const ChangePassword: React.FC = () => {
+  const { setUser } = useAuth();
   const [form, setForm] = useState({
     current_password: '',
     password: '',
@@ -21,7 +23,9 @@ const ChangePassword: React.FC = () => {
     setLoading(true);
     setMessage(null);
     try {
-      await authService.changePassword(form);
+      const { user } = await authService.changePassword(form);
+      // Clears must_change_password so the gate stops redirecting here.
+      if (user) setUser(user);
       setMessage({ type: 'success', text: 'Password changed successfully!' });
       setForm({ current_password: '', password: '', password_confirmation: '' });
     } catch (err: any) {
